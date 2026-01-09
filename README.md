@@ -1,36 +1,108 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI-Driven Hyper-Personalization System
 
-## Getting Started
+A Proof of Concept (PoC) for a banking personalization engine that connects external ad signals (Google/Meta Ads) with internal customer profiles to deliver hyper-relevant product recommendations.
 
-First, run the development server:
+![Dashboard Preview](./dashboard-preview.png)
+*(Note: You can add a screenshot of the dashboard here)*
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🚀 Features
+
+* **Ad Signal Ingestion**: API to receive intent signals (Search, Click, View) from ad platforms.
+* **Identity Matching**: Links Ad Cookies/IDs to internal Customer Information Files (CIF) securely.
+* **Recommendation Engine**: Heuristic-based logic to suggest products (Mortgage, Travel, Retirement) based on user intent and demographics.
+* **Admin Dashboard**: Real-time visualization of matched signals, conversion metrics, and a live banner preview.
+* **Dynamic Banner**: A React component that changes its aesthetic and content based on the recommended product.
+
+## 🛠 Tech Stack
+
+* **Framework**: Next.js 14+ (App Router)
+* **Language**: TypeScript
+* **Styling**: Tailwind CSS
+* **Icons**: Lucide React
+* **Deployment**: Vercel / Local
+
+## 📂 Project Structure
+
+```
+src/
+├── app/
+│   ├── api/ingest/    # API Route for receiving ad signals
+│   └── dashboard/     # Admin Dashboard Page
+├── components/
+│   └── PromoBanner.tsx # Dynamic Banner Component
+├── lib/
+│   ├── engine.ts      # Core matching & recommendation logic
+│   ├── mockData.ts    # Simulated database of customers
+│   └── types.ts       # Domain interfaces
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🏁 Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Prerequisites
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+* Node.js 18+
+* npm
 
-## Learn More
+### Installation
 
-To learn more about Next.js, take a look at the following resources:
+1. Clone the repository:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    ```bash
+    git clone https://github.com/muhamadbasim/analisa_agent.git
+    cd analisa_agent
+    ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. Install dependencies:
 
-## Deploy on Vercel
+    ```bash
+    npm install
+    ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. Run the development server:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+    ```bash
+    npm run dev
+    ```
+
+4. Open [http://localhost:3000/dashboard](http://localhost:3000/dashboard) to view the analytics dashboard.
+
+## 🧪 Verification
+
+To test the core logic without the UI, run the verification script:
+
+```bash
+npx tsx verify_logic.ts
+```
+
+This script will:
+
+1. Ingest a mock "MORTGAGE" signal.
+2. Verify the engine matches it to customer "Budi".
+3. Confirm the recommendation is updated to "KPR".
+
+## 📡 API Endpoints
+
+### `POST /api/ingest`
+
+Receives an ad interaction signal.
+
+**Body:**
+
+```json
+{
+  "source": "google",
+  "adId": "cookie_123",
+  "intent": "MORTGAGE",
+  "campaignType": "SEARCH"
+}
+```
+
+**Response:**
+
+```json
+{
+  "success": true,
+  "data": { "matched": true, "customerId": "10001" },
+  "message": "Signal matched to existing customer."
+}
+```
